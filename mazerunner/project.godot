@@ -10,11 +10,19 @@ config_version=5
 
 [application]
 
-config/name="Tutorial"
-run/main_scene="uid://ceh8mk67tkm5v"
+config/name="MazeRunner"
+run/main_scene="uid://02bu8ramsuor"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=400
+window/size/viewport_height=400
+window/size/mode=4
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+
 [dotnet]
 
-project/assembly_name="Tutorial"
+project/assembly_name="MazeRunner"

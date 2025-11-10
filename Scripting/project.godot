@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="Tutorial"
-run/main_scene="uid://ceh8mk67tkm5v"
+config/name="Scripting"
+run/main_scene="uid://dwhyrvciakuj0"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="Tutorial"
+project/assembly_name="Scripting"
