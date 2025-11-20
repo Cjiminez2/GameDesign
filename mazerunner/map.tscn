@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://02bu8ramsuor"]
+[gd_scene load_steps=11 format=3 uid="uid://02bu8ramsuor"]
 
 [ext_resource type="Script" uid="uid://tsl7tc2dqyt6" path="res://map.gd" id="1_e0an3"]
 [ext_resource type="Texture2D" uid="uid://c1h1jfwme41n3" path="res://squares3.png" id="2_e0an3"]
@@ -17,6 +17,33 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_e0an3")
 sources/0 = SubResource("TileSetAtlasSource_p5pve")
 
+[sub_resource type="Gradient" id="Gradient_e0an3"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.401961, 0.411765)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p5pve"]
+gradient = SubResource("Gradient_e0an3")
+width = 192
+height = 192
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="GDScript" id="GDScript_e0an3"]
+script/source = "extends Area2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5pve"]
+
 [node name="Map" type="Node"]
 script = ExtResource("1_e0an3")
 
@@ -24,4 +51,26 @@ script = ExtResource("1_e0an3")
 tile_set = SubResource("TileSet_urblq")
 
 [node name="PlayerSquare" parent="." instance=ExtResource("2_wijl4")]
-position = Vector2(16, 16)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerSquare"]
+position = Vector2(32, 32)
+scale = Vector2(1e-05, 1e-05)
+zoom = Vector2(2, 2)
+
+[node name="PointLight2D" type="PointLight2D" parent="PlayerSquare"]
+texture = SubResource("GradientTexture2D_p5pve")
+
+[node name="Goal" type="Area2D" parent="."]
+script = SubResource("GDScript_e0an3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+position = Vector2(368, 400)
+shape = SubResource("RectangleShape2D_p5pve")
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(20, 20)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]

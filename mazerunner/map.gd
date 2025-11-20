@@ -27,7 +27,8 @@ func generate_maze():
 	maze[start_row][start_col] = 0
 	
 	carve_passage(start_row, start_col)
-	print(maze)
+	#Adds the EXIT
+	maze[24][23] = 0
 	draw_maze()
 	
 func carve_passage(row, col):
@@ -68,5 +69,11 @@ func draw_maze():
 			tilemaplayer.set_cell(Vector2i(c, r), 0, tile_type)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
+
+
+func _on_goal_body_entered(_body: Node2D) -> void:
+	$PlayerSquare.position = $StartPosition.position
+	$PlayerSquare/Line2D.clear_points()
+	generate_maze()
