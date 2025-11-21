@@ -1,16 +1,46 @@
 extends Node
 
 @onready var tilemaplayer = $TileMapLayer
-const ROWS = 25
-const COLS = 25
+var ROWS
+var COLS
 const WALL = Vector2i(0, 0)
 const PATH = Vector2i(1, 0)
 
 var maze = []
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	generate_maze()
 
+func _setup_maze(scaler: float):
+	$TileMapLayer.scale = Vector2(scaler, scaler)
+	$StartPosition.scale = Vector2(scaler, scaler)
+	$PlayerSquare/Sprite2D.scale = Vector2(scaler, scaler)
+	$PlayerSquare/CollisionShape2D.scale = Vector2(scaler, scaler)
+
+func _base_maze():
+	$StartPosition.position = Vector2(17, 17)
+	$PlayerSquare/Sprite2D.texture.width = 12
+	$PlayerSquare/Sprite2D.texture.height = 12
+	$PlayerSquare/CollisionShape2D.shape.set_size(Vector2(12, 12))
+	
+
+func _new_normal():
+	_base_maze()
+	$Goal/CollisionShape2D.position = Vector2(375, 420)
+	_setup_maze(1.0)
+	ROWS = 25
+	COLS = 25
+	$PlayerSquare.position = $StartPosition.position
+	$PlayerSquare/Line2D.clear_points()
+	generate_maze()
+	
+func _new_hard():
+	_base_maze()
+	$Goal/CollisionShape2D.position = Vector2(425, 455)
+	_setup_maze(0.5)
+	ROWS = 55
+	COLS = 55
+	$PlayerSquare.position = $StartPosition.position
+	$PlayerSquare/Line2D.clear_points()
+	generate_maze()
+	
 func reset_maze():
 	maze = []
 	for r in range(ROWS):
@@ -28,7 +58,7 @@ func generate_maze():
 	
 	carve_passage(start_row, start_col)
 	#Adds the EXIT
-	maze[24][23] = 0
+	maze[-1][-2] = 0
 	draw_maze()
 	
 func carve_passage(row, col):
@@ -74,6 +104,5 @@ func _process(_delta: float) -> void:
 
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	$PlayerSquare.position = $StartPosition.position
-	$PlayerSquare/Line2D.clear_points()
-	generate_maze()
+	$HUD/Normal.show()
+	$HUD/Hard.show()
