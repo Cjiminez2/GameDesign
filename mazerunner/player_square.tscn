@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://coan3q88lkyio"]
 
 [ext_resource type="Script" uid="uid://hbhrnntk2iso" path="res://player_square.gd" id="1_n84i3"]
-[ext_resource type="Script" uid="uid://f11pgs7mn457" path="res://line_2d.gd" id="2_usb24"]
+[ext_resource type="Script" uid="uid://f11pgs7mn457" path="res://path.gd" id="2_usb24"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0i70"]
 size = Vector2(10, 10)
@@ -63,7 +63,6 @@ texture = SubResource("GradientTexture2D_usb24")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_n84i3")
-emitting = false
 amount = 50
 texture = SubResource("GradientTexture2D_xq5i5")
 fixed_fps = 60
@@ -71,7 +70,7 @@ interpolate = false
 fract_delta = false
 process_material = SubResource("ParticleProcessMaterial_n84i3")
 
-[node name="Line2D" type="Line2D" parent="."]
+[node name="Path" type="Line2D" parent="."]
 top_level = true
 width = 2.0
 default_color = Color(1, 0, 0, 1)

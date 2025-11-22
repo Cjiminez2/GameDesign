@@ -1,10 +1,6 @@
 extends CharacterBody2D
 @export_range(0, 1000) var speed := 60
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-
 func _physics_process(_delta: float) -> void:
 	get_player_input()
 	move_and_slide()
