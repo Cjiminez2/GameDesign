@@ -24,6 +24,10 @@ func _setup_maze(scaler: float) -> void:
 
 #Base settup for the setup to scale from
 func _base_maze() -> void:
+	player.visible = !player.visible
+	sprite.modulate = Color(1, 0, 0)
+	$PlayerSquare/GPUParticles2D.modulate = Color(1, 0, 0)
+	trail.modulate = Color(1, 0, 0)
 	start.position = Vector2(17, 17)
 	sprite.texture.width = 12
 	sprite.texture.height = 12
@@ -31,7 +35,6 @@ func _base_maze() -> void:
 	
 #Maze generation for NORMAL
 func _new_normal() -> void:
-	maze_grid.collision_enabled = false
 	_base_maze()
 	_setup_maze(1.0)
 	goal.position = Vector2(375, 420)
@@ -115,4 +118,4 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	get_tree().change_scene_to_file("res://title_screen.tscn")
+	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")

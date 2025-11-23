@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://coan3q88lkyio"]
 
-[ext_resource type="Script" uid="uid://hbhrnntk2iso" path="res://player_square.gd" id="1_n84i3"]
-[ext_resource type="Script" uid="uid://f11pgs7mn457" path="res://path.gd" id="2_usb24"]
+[ext_resource type="Script" uid="uid://hbhrnntk2iso" path="res://scripts/player_square.gd" id="1_n84i3"]
+[ext_resource type="Script" uid="uid://f11pgs7mn457" path="res://scripts/path.gd" id="2_usb24"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0i70"]
 size = Vector2(10, 10)
 
 [sub_resource type="Gradient" id="Gradient_n84i3"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_usb24"]
 gradient = SubResource("Gradient_n84i3")
@@ -23,7 +23,7 @@ light_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_usb24"]
 interpolation_mode = 2
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xq5i5"]
 gradient = SubResource("Gradient_usb24")
@@ -46,7 +46,6 @@ emission_ring_radius = 3.55
 emission_ring_inner_radius = 2.0
 emission_ring_cone_angle = 90.0
 gravity = Vector3(0, 0, 0)
-color = Color(1, 0, 0, 1)
 alpha_curve = SubResource("CurveTexture_usb24")
 
 [node name="PlayerSquare" type="CharacterBody2D"]
@@ -73,5 +72,4 @@ process_material = SubResource("ParticleProcessMaterial_n84i3")
 [node name="Path" type="Line2D" parent="."]
 top_level = true
 width = 2.0
-default_color = Color(1, 0, 0, 1)
 script = ExtResource("2_usb24")

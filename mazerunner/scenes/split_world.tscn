@@ -1,0 +1,116 @@
+[gd_scene load_steps=13 format=3 uid="uid://dv58iofs3efr0"]
+
+[ext_resource type="Texture2D" uid="uid://c1h1jfwme41n3" path="res://squares3.png" id="1_kxxhg"]
+[ext_resource type="Script" uid="uid://cninsny4x7spv" path="res://scenes/split_world.gd" id="1_qwk4s"]
+[ext_resource type="PackedScene" uid="uid://coan3q88lkyio" path="res://scenes/player_square.tscn" id="2_qwk4s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e0an3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tk2a7"]
+texture = ExtResource("1_kxxhg")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0nwrv"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_e0an3")
+sources/0 = SubResource("TileSetAtlasSource_tk2a7")
+
+[sub_resource type="Gradient" id="Gradient_e0an3"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.401961, 0.411765)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8w6ao"]
+gradient = SubResource("Gradient_e0an3")
+width = 192
+height = 192
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_kxxhg"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.401961, 0.411765)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qwk4s"]
+gradient = SubResource("Gradient_kxxhg")
+width = 192
+height = 192
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="GDScript" id="GDScript_tk2a7"]
+script/source = "extends Area2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nwrv"]
+
+[node name="split_world" type="Node"]
+script = ExtResource("1_qwk4s")
+
+[node name="MazeGrid2" type="TileMapLayer" parent="."]
+position = Vector2(694, 0)
+tile_set = SubResource("TileSet_0nwrv")
+
+[node name="MazeGrid" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_0nwrv")
+
+[node name="Player1" parent="." instance=ExtResource("2_qwk4s")]
+id = 1
+
+[node name="View1" type="Camera2D" parent="Player1"]
+position = Vector2(32, 32)
+scale = Vector2(1e-05, 1e-05)
+zoom = Vector2(2, 2)
+
+[node name="AOV1" type="PointLight2D" parent="Player1"]
+texture = SubResource("GradientTexture2D_8w6ao")
+
+[node name="Player2" parent="." instance=ExtResource("2_qwk4s")]
+position = Vector2(50, 0)
+id = 2
+
+[node name="View2" type="Camera2D" parent="Player2"]
+position = Vector2(32, 32)
+scale = Vector2(1e-05, 1e-05)
+zoom = Vector2(2, 2)
+
+[node name="AOV2" type="PointLight2D" parent="Player2"]
+texture = SubResource("GradientTexture2D_qwk4s")
+
+[node name="Goal" type="Area2D" parent="."]
+script = SubResource("GDScript_tk2a7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+position = Vector2(1127, 454)
+shape = SubResource("RectangleShape2D_0nwrv")
+
+[node name="Goal2" type="Area2D" parent="."]
+script = SubResource("GDScript_tk2a7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2"]
+position = Vector2(433, 456)
+shape = SubResource("RectangleShape2D_0nwrv")
+
+[node name="StartPosition2" type="Marker2D" parent="."]
+position = Vector2(12, 12)
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(706, 12)
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
+[connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]
