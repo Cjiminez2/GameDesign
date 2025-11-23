@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dv58iofs3efr0"]
 
 [ext_resource type="Texture2D" uid="uid://c1h1jfwme41n3" path="res://squares3.png" id="1_kxxhg"]
-[ext_resource type="Script" uid="uid://cninsny4x7spv" path="res://scenes/split_world.gd" id="1_qwk4s"]
+[ext_resource type="Script" uid="uid://cninsny4x7spv" path="res://scripts/split_world.gd" id="1_qwk4s"]
 [ext_resource type="PackedScene" uid="uid://coan3q88lkyio" path="res://scenes/player_square.tscn" id="2_qwk4s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e0an3"]

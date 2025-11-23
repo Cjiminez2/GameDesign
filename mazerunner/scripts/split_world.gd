@@ -17,6 +17,10 @@ extends Node
 @onready var player_two_collision: CollisionShape2D = $Player2/CollisionShape2D
 @onready var trail_two: Line2D = $Player2/Path
 
+var both_ready: int = 0
+var one_ready: int = 0
+var two_ready: int = 0
+
 var ROWS: int = 55
 var COLS: int = 55
 const WALL: Vector2i = Vector2i(0, 0)
@@ -42,16 +46,8 @@ func _base_maze() -> void:
 	sprite_two.texture.width = 12
 	sprite_two.texture.height = 12
 	player_two_collision.shape.set_size(Vector2(12, 12))
-	
-#Maze generation for NORMAL
-func _ready() -> void:
-	sprite_two.modulate = Color(0, 0, 1)
-	$Player2/GPUParticles2D.modulate = Color(0, 0, 1)
-	trail_two.modulate = Color(0, 0, 1)
-	sprite_one.modulate = Color(1, 0, 0)
-	$Player1/GPUParticles2D.modulate = Color(1, 0, 0)
-	trail_one.modulate = Color(1, 0, 0)
-	
+
+func race_start() -> void:
 	_base_maze()
 	_setup_maze(0.5)
 	player_one.position = start.position
@@ -59,6 +55,10 @@ func _ready() -> void:
 	trail_one.clear_points()
 	trail_two.clear_points()
 	generate_maze()
+	
+#Maze generation for NORMAL
+func _ready() -> void:
+	pass
 
 func reset_maze() -> void:
 	maze = []
@@ -118,9 +118,64 @@ func draw_maze() -> void:
 			maze_grid.set_cell(Vector2i(c, r), 0, tile_type)
 			second_grid.set_cell(Vector2i(c, r), 0, tile_type)
 
+func _choose_color() -> void:
+	if (one_ready == 0) or (two_ready == 0):
+		if Input.is_action_just_pressed("right_1"):
+			sprite_one.modulate = Color(1, 0.1, 0.3)
+			$Player1/GPUParticles2D.modulate = Color(1, 0.1, 0.3)
+			trail_one.modulate = Color(1, 0.1, 0.3)
+
+		if Input.is_action_just_pressed("left_1"):
+			sprite_one.modulate = Color(0, 0.4, 1)
+			$Player1/GPUParticles2D.modulate = Color(0, 0.4, 1)
+			trail_one.modulate = Color(0, 1, 1)
+
+		if Input.is_action_just_pressed("down_1"):
+			sprite_one.modulate = Color(0, 1, 0.4)
+			$Player1/GPUParticles2D.modulate = Color(0, 1, 0.4)
+			trail_one.modulate = Color(0, 1, 0.4)
+
+		if Input.is_action_just_pressed("up_1"):
+			sprite_one.modulate = Color(1, 0.5, 0)
+			$Player1/GPUParticles2D.modulate = Color(1, 0.5, 0)
+			trail_one.modulate = Color(1, 1, 0)
+
+		if Input.is_action_just_pressed("right_2"):
+			sprite_two.modulate = Color(1, 0.1, 0.3)
+			$Player2/GPUParticles2D.modulate = Color(1, 0.1, 0.3)
+			trail_two.modulate = Color(1, 0.1, 0.3)
+
+		if Input.is_action_just_pressed("left_2"):
+			sprite_two.modulate = Color(0, 0.4, 1)
+			$Player2/GPUParticles2D.modulate = Color(0, 0.4, 1)
+			trail_two.modulate = Color(0, 1, 1)
+
+		if Input.is_action_just_pressed("down_2"):
+			sprite_two.modulate = Color(0, 1, 0.4)
+			$Player2/GPUParticles2D.modulate = Color(0, 1, 0.4)
+			trail_two.modulate = Color(0, 1, 0)
+
+		if Input.is_action_just_pressed("up_2"):
+			sprite_two.modulate = Color(1, 0.5, 0)
+			$Player2/GPUParticles2D.modulate = Color(1, 0.5, 0)
+			trail_two.modulate = Color(1, 1, 0)
+			
+		if Input.is_action_just_pressed("one_ready"):
+			one_ready = 1
+
+		if Input.is_action_just_pressed("two_ready"):
+			two_ready = 1
+			
+	both_ready = one_ready + two_ready
+		
+	if (both_ready == 2):
+		both_ready = -1
+		one_ready = -1
+		two_ready = -1
+		race_start()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	_choose_color()
 
 func _on_goal_body_entered(_body: Node2D) -> void:
 	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
