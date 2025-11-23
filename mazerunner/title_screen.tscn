@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://duicwtrxwx72p"]
+
+[ext_resource type="Script" uid="uid://dn4n8dyywsb86" path="res://title_screen.gd" id="1_v6p8y"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v6p8y")
+
+[node name="Normal" type="Button" parent="."]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 104.0
+offset_right = 244.0
+offset_bottom = 161.0
+text = "Normal"
+
+[node name="Hard" type="Button" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 217.0
+offset_right = 210.0
+offset_bottom = 248.0
+text = "Hard
+"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 292.0
+offset_right = 208.0
+offset_bottom = 323.0
+text = "Quit"
+
+[connection signal="pressed" from="Normal" to="." method="_on_normal_pressed"]
+[connection signal="pressed" from="Hard" to="." method="_on_hard_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

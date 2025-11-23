@@ -31,6 +31,7 @@ func _base_maze() -> void:
 	
 #Maze generation for NORMAL
 func _new_normal() -> void:
+	maze_grid.collision_enabled = false
 	_base_maze()
 	_setup_maze(1.0)
 	goal.position = Vector2(375, 420)
@@ -114,5 +115,4 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	$HUD/Normal.show()
-	$HUD/Hard.show()
+	get_tree().change_scene_to_file("res://title_screen.tscn")

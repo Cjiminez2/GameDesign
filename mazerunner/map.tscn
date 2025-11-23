@@ -52,6 +52,7 @@ script = ExtResource("1_e0an3")
 tile_set = SubResource("TileSet_urblq")
 
 [node name="PlayerSquare" parent="." instance=ExtResource("2_wijl4")]
+id = 1
 
 [node name="PlayerView" type="Camera2D" parent="PlayerSquare"]
 position = Vector2(32, 32)
