@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj6po1n3e5xbx"]
+[gd_scene load_steps=6 format=3 uid="uid://bj6po1n3e5xbx"]
 
 [ext_resource type="Script" uid="uid://brrrw65minkp8" path="res://scripts/split_screen.gd" id="1_c5m37"]
 [ext_resource type="Script" uid="uid://b01acv2rycs1" path="res://scripts/p_2_camera.gd" id="2_b2tsv"]
 [ext_resource type="PackedScene" uid="uid://dv58iofs3efr0" path="res://scenes/split_world.tscn" id="4_b2tsv"]
 [ext_resource type="Script" uid="uid://dwgqpvcfb8p1r" path="res://scripts/p_1_camera.gd" id="4_utmev"]
+[ext_resource type="PackedScene" uid="uid://cgfeb12u6er2t" path="res://scenes/screen_transition.tscn" id="5_utmev"]
 
 [node name="SplitScreen" type="Node"]
 script = ExtResource("1_c5m37")
@@ -57,3 +58,8 @@ drag_bottom_margin = 0.0
 script = ExtResource("4_utmev")
 
 [node name="World" parent="Splitter/P1Container/P1View" instance=ExtResource("4_b2tsv")]
+
+[node name="ScreenTransition" parent="Splitter" instance=ExtResource("5_utmev")]
+
+[connection signal="one_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_one_wins"]
+[connection signal="two_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_two_wins"]

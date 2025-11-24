@@ -1,5 +1,6 @@
 extends Node
 #Common variables
+@onready var transition: AnimationPlayer = $HUD/ScreenTransition/AnimationPlayer
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var player: CharacterBody2D = $PlayerSquare
 @onready var sprite: Sprite2D = $PlayerSquare/Sprite2D
@@ -118,4 +119,10 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
+	transition.play("fade_in")
+	await get_tree().create_timer(1.0).timeout
+	Global.goto_scene("res://scenes/title_screen.tscn")
+	
+func _ready() -> void:
+	transition.get_parent().get_node("ColorRect").color.a = 255
+	transition.play("fade_out")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://02bu8ramsuor"]
+[gd_scene load_steps=13 format=3 uid="uid://02bu8ramsuor"]
 
 [ext_resource type="Script" uid="uid://tsl7tc2dqyt6" path="res://scripts/map.gd" id="1_0cso3"]
 [ext_resource type="Texture2D" uid="uid://c1h1jfwme41n3" path="res://squares3.png" id="2_2klcf"]
 [ext_resource type="PackedScene" uid="uid://coan3q88lkyio" path="res://scenes/player_square.tscn" id="3_2lpho"]
 [ext_resource type="PackedScene" uid="uid://b6obkuu3066ih" path="res://scenes/hud.tscn" id="4_nakos"]
+[ext_resource type="PackedScene" uid="uid://cgfeb12u6er2t" path="res://scenes/screen_transition.tscn" id="5_2klcf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0cso3"]
 
@@ -77,6 +78,8 @@ position = Vector2(16, 16)
 color = Color(0, 0, 0, 1)
 
 [node name="HUD" parent="." instance=ExtResource("4_nakos")]
+
+[node name="ScreenTransition" parent="HUD" instance=ExtResource("5_2klcf")]
 
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
 [connection signal="start_hard" from="HUD" to="." method="_new_hard"]

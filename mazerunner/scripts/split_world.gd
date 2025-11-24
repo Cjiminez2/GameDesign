@@ -1,4 +1,7 @@
 extends Node
+
+signal one_wins
+signal two_wins
 #Common variables
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var second_grid: TileMapLayer = $MazeGrid2
@@ -178,8 +181,8 @@ func _process(_delta: float) -> void:
 	_choose_color()
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
+	emit_signal("one_wins")
 
 
 func _on_goal_2_body_entered(_body: Node2D) -> void:
-	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
+	emit_signal("two_wins")
