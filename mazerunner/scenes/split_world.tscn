@@ -112,5 +112,7 @@ position = Vector2(706, 12)
 [node name="Darkness" type="CanvasModulate" parent="."]
 color = Color(0, 0, 0, 1)
 
+[connection signal="ready_1" from="Player1" to="." method="_on_ready_1"]
+[connection signal="ready_2" from="Player2" to="." method="_on_ready_2"]
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
 [connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bj6po1n3e5xbx"]
+[gd_scene load_steps=5 format=3 uid="uid://bj6po1n3e5xbx"]
 
 [ext_resource type="Script" uid="uid://brrrw65minkp8" path="res://scripts/split_screen.gd" id="1_c5m37"]
-[ext_resource type="Script" uid="uid://b01acv2rycs1" path="res://scripts/p_2_camera.gd" id="2_b2tsv"]
+[ext_resource type="Script" uid="uid://cur3sih46r6t7" path="res://scripts/multiplayer_camera.gd" id="2_b2tsv"]
 [ext_resource type="PackedScene" uid="uid://dv58iofs3efr0" path="res://scenes/split_world.tscn" id="4_b2tsv"]
-[ext_resource type="Script" uid="uid://dwgqpvcfb8p1r" path="res://scripts/p_1_camera.gd" id="4_utmev"]
 [ext_resource type="PackedScene" uid="uid://cgfeb12u6er2t" path="res://scenes/screen_transition.tscn" id="5_utmev"]
 
 [node name="SplitScreen" type="Node"]
@@ -27,7 +26,7 @@ stretch = true
 
 [node name="P2View" type="SubViewport" parent="Splitter/P2Container"]
 handle_input_locally = false
-size = Vector2i(150, 400)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="P2Camera" type="Camera2D" parent="Splitter/P2Container/P2View"]
@@ -46,16 +45,17 @@ stretch = true
 
 [node name="P1View" type="SubViewport" parent="Splitter/P1Container"]
 handle_input_locally = false
-size = Vector2i(150, 400)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="P1Camera" type="Camera2D" parent="Splitter/P1Container/P1View"]
+scale = Vector2(2, 2)
 zoom = Vector2(2, 2)
 drag_left_margin = 0.0
 drag_top_margin = 0.0
 drag_right_margin = 0.0
 drag_bottom_margin = 0.0
-script = ExtResource("4_utmev")
+script = ExtResource("2_b2tsv")
 
 [node name="World" parent="Splitter/P1Container/P1View" instance=ExtResource("4_b2tsv")]
 
