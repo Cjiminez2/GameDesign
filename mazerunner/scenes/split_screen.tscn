@@ -61,5 +61,14 @@ script = ExtResource("4_utmev")
 
 [node name="ScreenTransition" parent="Splitter" instance=ExtResource("5_utmev")]
 
+[node name="TextEdit" type="TextEdit" parent="Splitter/ScreenTransition"]
+visible = false
+offset_left = 114.0
+offset_top = 174.0
+offset_right = 292.0
+offset_bottom = 295.0
+mouse_filter = 2
+text = "Player One Wins"
+
 [connection signal="one_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_one_wins"]
 [connection signal="two_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_two_wins"]

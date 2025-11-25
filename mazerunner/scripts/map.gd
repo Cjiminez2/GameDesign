@@ -6,6 +6,7 @@ extends Node
 @onready var sprite: Sprite2D = $PlayerSquare/Sprite2D
 @onready var player_collision: CollisionShape2D = $PlayerSquare/CollisionShape2D
 @onready var trail: Line2D = $PlayerSquare/Path
+@onready var particles: GPUParticles2D = $PlayerSquare/GPUParticles2D
 @onready var start: Marker2D = $StartPosition
 @onready var goal: CollisionShape2D = $Goal/CollisionShape2D
 
@@ -22,12 +23,14 @@ func _setup_maze(scaler: float) -> void:
 	start.scale = Vector2(scaler, scaler)
 	sprite.scale = Vector2(scaler, scaler)
 	player_collision.scale = Vector2(scaler, scaler)
+	goal.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
+	player.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(1,1)))
 
 #Base settup for the setup to scale from
 func _base_maze() -> void:
 	player.visible = !player.visible
 	sprite.modulate = Color(1, 0, 0)
-	$PlayerSquare/GPUParticles2D.modulate = Color(1, 0, 0)
+	particles.modulate = Color(1, 0, 0)
 	trail.modulate = Color(1, 0, 0)
 	start.position = Vector2(17, 17)
 	sprite.texture.width = 12
@@ -36,25 +39,20 @@ func _base_maze() -> void:
 	
 #Maze generation for NORMAL
 func _new_normal() -> void:
-	_base_maze()
-	_setup_maze(1.0)
-	goal.position = Vector2(375, 420)
-	player.position = start.position
-	trail.clear_points()
 	ROWS = 25
 	COLS = 25
+	_base_maze()
+	_setup_maze(1.0)
+	trail.clear_points()
 	generate_maze()
 
 #Maze generation for HARD
 func _new_hard() -> void:
-	_base_maze()
-	_setup_maze(0.5)
-	goal.position = Vector2(425, 455)
-	player.position = start.position
-	player.position.x -= 5
-	trail.clear_points()
 	ROWS = 55
 	COLS = 55
+	_base_maze()
+	_setup_maze(0.5)
+	trail.clear_points()
 	generate_maze()
 	
 func reset_maze() -> void:

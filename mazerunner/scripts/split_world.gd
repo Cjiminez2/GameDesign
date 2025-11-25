@@ -14,11 +14,13 @@ signal two_wins
 @onready var sprite_one: Sprite2D = $Player1/Sprite2D
 @onready var player_one_collision: CollisionShape2D = $Player1/CollisionShape2D
 @onready var trail_one: Line2D = $Player1/Path
+@onready var particles_one: GPUParticles2D = $Player1/GPUParticles2D
 
 @onready var player_two: CharacterBody2D = $Player2
 @onready var sprite_two: Sprite2D = $Player2/Sprite2D
 @onready var player_two_collision: CollisionShape2D = $Player2/CollisionShape2D
 @onready var trail_two: Line2D = $Player2/Path
+@onready var particles_two: GPUParticles2D = $Player2/GPUParticles2D
 
 var both_ready: int = 0
 var one_ready: int = 0
@@ -39,6 +41,11 @@ func _setup_maze(scaler: float) -> void:
 	sprite_two.scale = Vector2(scaler, scaler)
 	player_one_collision.scale = Vector2(scaler, scaler)
 	player_two_collision.scale = Vector2(scaler, scaler)
+	goal.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
+	player_one.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(1,1)))
+	
+	goal_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
+	player_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(1,1)))
 
 #Base settup for the setup to scale from
 func _base_maze() -> void:
@@ -61,7 +68,13 @@ func race_start() -> void:
 	
 #Maze generation for NORMAL
 func _ready() -> void:
-	pass
+	sprite_one.modulate = Color(1, 0, 0)
+	particles_one.modulate = Color(1, 0, 0)
+	trail_one.modulate = Color(1, 0, 0)
+	
+	sprite_two.modulate = Color(1, 0, 0)
+	particles_two.modulate = Color(1, 0, 0)
+	trail_two.modulate = Color(1, 0, 0)
 
 func reset_maze() -> void:
 	maze = []
@@ -122,49 +135,60 @@ func draw_maze() -> void:
 			second_grid.set_cell(Vector2i(c, r), 0, tile_type)
 
 func _choose_color() -> void:
-	if (one_ready == 0) or (two_ready == 0):
+	if (one_ready == 0):
 		if Input.is_action_just_pressed("right_1"):
 			sprite_one.modulate = Color(1, 0.1, 0.3)
-			$Player1/GPUParticles2D.modulate = Color(1, 0.1, 0.3)
+			particles_one.modulate = Color(1, 0.1, 0.3)
 			trail_one.modulate = Color(1, 0.1, 0.3)
 
 		if Input.is_action_just_pressed("left_1"):
 			sprite_one.modulate = Color(0, 0.4, 1)
-			$Player1/GPUParticles2D.modulate = Color(0, 0.4, 1)
+			particles_one.modulate = Color(0, 0.4, 1)
 			trail_one.modulate = Color(0, 1, 1)
 
 		if Input.is_action_just_pressed("down_1"):
 			sprite_one.modulate = Color(0, 1, 0.4)
-			$Player1/GPUParticles2D.modulate = Color(0, 1, 0.4)
+			particles_one.modulate = Color(0, 1, 0.4)
 			trail_one.modulate = Color(0, 1, 0.4)
 
 		if Input.is_action_just_pressed("up_1"):
 			sprite_one.modulate = Color(1, 0.5, 0)
-			$Player1/GPUParticles2D.modulate = Color(1, 0.5, 0)
+			particles_one.modulate = Color(1, 0.5, 0)
 			trail_one.modulate = Color(1, 1, 0)
-
+			
+		if Input.is_action_just_pressed("white_1"):
+			sprite_one.modulate = Color(1, 1, 1)
+			particles_one.modulate = Color(1, 1, 1)
+			trail_one.modulate = Color(1, 1, 1)
+		
+		if Input.is_action_just_pressed("one_ready"):
+			one_ready = 1
+	
+	if (two_ready == 0):
 		if Input.is_action_just_pressed("right_2"):
 			sprite_two.modulate = Color(1, 0.1, 0.3)
-			$Player2/GPUParticles2D.modulate = Color(1, 0.1, 0.3)
+			particles_two.modulate = Color(1, 0.1, 0.3)
 			trail_two.modulate = Color(1, 0.1, 0.3)
 
 		if Input.is_action_just_pressed("left_2"):
 			sprite_two.modulate = Color(0, 0.4, 1)
-			$Player2/GPUParticles2D.modulate = Color(0, 0.4, 1)
+			particles_two.modulate = Color(0, 0.4, 1)
 			trail_two.modulate = Color(0, 1, 1)
 
 		if Input.is_action_just_pressed("down_2"):
 			sprite_two.modulate = Color(0, 1, 0.4)
-			$Player2/GPUParticles2D.modulate = Color(0, 1, 0.4)
+			particles_two.modulate = Color(0, 1, 0.4)
 			trail_two.modulate = Color(0, 1, 0)
 
 		if Input.is_action_just_pressed("up_2"):
 			sprite_two.modulate = Color(1, 0.5, 0)
-			$Player2/GPUParticles2D.modulate = Color(1, 0.5, 0)
+			particles_two.modulate = Color(1, 0.5, 0)
 			trail_two.modulate = Color(1, 1, 0)
 			
-		if Input.is_action_just_pressed("one_ready"):
-			one_ready = 1
+		if Input.is_action_just_pressed("white_2"):
+			sprite_two.modulate = Color(1, 1, 1)
+			particles_two.modulate = Color(1, 1, 1)
+			trail_two.modulate = Color(1, 1, 1)
 
 		if Input.is_action_just_pressed("two_ready"):
 			two_ready = 1

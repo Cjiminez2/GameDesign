@@ -28,6 +28,7 @@ func _on_one_wins() -> void:
 
 
 func _on_two_wins() -> void:
+	#$Splitter/ScreenTransition/TextEdit.visible = !$Splitter/ScreenTransition/TextEdit.visible
 	transition.play("fade_in")
 	await get_tree().create_timer(1.0).timeout
 	Global.goto_scene("res://scenes/title_screen.tscn")
