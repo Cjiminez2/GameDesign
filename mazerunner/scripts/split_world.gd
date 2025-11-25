@@ -5,20 +5,11 @@ signal two_wins
 #Common variables
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var second_grid: TileMapLayer = $MazeGrid2
-@onready var start: Marker2D = $StartPosition
-@onready var start_two: Marker2D = $StartPosition2
 @onready var goal: CollisionShape2D = $Goal/CollisionShape2D
 @onready var goal_two: CollisionShape2D = $Goal2/CollisionShape2D
 
 @onready var player_one: CharacterBody2D = $Player1
-@onready var sprite_one: Sprite2D = $Player1/Sprite2D
-@onready var player_one_collision: CollisionShape2D = $Player1/CollisionShape2D
-@onready var trail_one: Line2D = $Player1/Path
-
 @onready var player_two: CharacterBody2D = $Player2
-@onready var sprite_two: Sprite2D = $Player2/Sprite2D
-@onready var player_two_collision: CollisionShape2D = $Player2/CollisionShape2D
-@onready var trail_two: Line2D = $Player2/Path
 
 var both_ready: int = 0
 var one_ready: int = 0
@@ -43,24 +34,12 @@ func _setup_maze(scale: float) -> void:
 	
 	goal_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
 	player_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(1,1)))
+	player_one.clear_trail()
+	player_two.clear_trail()
 
-#Base settup for the setup to scale from
-func _base_maze() -> void:
-	sprite_one.texture.width = 12
-	sprite_one.texture.height = 12
-	player_one_collision.shape.set_size(Vector2(12, 12))
-	
-	sprite_two.texture.width = 12
-	sprite_two.texture.height = 12
-	player_two_collision.shape.set_size(Vector2(12, 12))
 
 func race_start() -> void:
-	_base_maze()
 	_setup_maze(2.0)
-	player_one.position = start.position
-	player_two.position = start_two.position
-	trail_one.clear_points()
-	trail_two.clear_points()
 	generate_maze()
 	
 	

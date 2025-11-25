@@ -54,3 +54,6 @@ func choose_color() -> void:
 		if Input.is_action_just_pressed("ready_%s" % id):
 			player_ready = 1
 			emit_signal("ready_%s" % id)
+
+func clear_trail() -> void:
+	trail.clear_points()

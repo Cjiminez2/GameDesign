@@ -3,10 +3,6 @@ extends Node
 @onready var transition: AnimationPlayer = $HUD/ScreenTransition/AnimationPlayer
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var player: CharacterBody2D = $PlayerSquare
-@onready var sprite: Sprite2D = $PlayerSquare/Sprite2D
-@onready var player_collision: CollisionShape2D = $PlayerSquare/CollisionShape2D
-@onready var trail: Line2D = $PlayerSquare/Path
-@onready var start: Marker2D = $StartPosition
 @onready var goal: CollisionShape2D = $Goal/CollisionShape2D
 
 var ROWS: int
@@ -19,37 +15,27 @@ var maze := []
 #Scales the maze according to the difficulty
 func _setup_maze(scale: float) -> void:
 	var scaler: float = 1 / scale
+	player.visible = !player.visible
+	player.change_color(Color(1, 0, 0))
 	maze_grid.scale = Vector2(scaler, scaler)
-	start.scale = Vector2(scaler, scaler)
 	player.scale_player(scaler)
 	goal.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
 	player.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(1,1)))
+	player.clear_trail()
 
-#Base settup for the setup to scale from
-func _base_maze() -> void:
-	player.visible = !player.visible
-	player.change_color(Color(1, 0, 0))
-	start.position = Vector2(17, 17)
-	sprite.texture.width = 12
-	sprite.texture.height = 12
-	player_collision.shape.set_size(Vector2(12, 12))
 	
 #Maze generation for NORMAL
 func _new_normal() -> void:
 	ROWS = 25
 	COLS = 25
-	_base_maze()
 	_setup_maze(1.0)
-	trail.clear_points()
 	generate_maze()
 
 #Maze generation for HARD
 func _new_hard() -> void:
 	ROWS = 55
 	COLS = 55
-	_base_maze()
 	_setup_maze(2.0)
-	trail.clear_points()
 	generate_maze()
 	
 func reset_maze() -> void:

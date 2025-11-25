@@ -4,15 +4,15 @@
 [ext_resource type="Script" uid="uid://f11pgs7mn457" path="res://scripts/path.gd" id="2_usb24"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0i70"]
-size = Vector2(10, 10)
+size = Vector2(12, 12)
 
 [sub_resource type="Gradient" id="Gradient_n84i3"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_usb24"]
 gradient = SubResource("Gradient_n84i3")
-width = 10
-height = 10
+width = 12
+height = 12
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)

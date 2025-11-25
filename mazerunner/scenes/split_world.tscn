@@ -103,12 +103,6 @@ script = SubResource("GDScript_tk2a7")
 position = Vector2(433, 456)
 shape = SubResource("RectangleShape2D_0nwrv")
 
-[node name="StartPosition2" type="Marker2D" parent="."]
-position = Vector2(12, 12)
-
-[node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(706, 12)
-
 [node name="Darkness" type="CanvasModulate" parent="."]
 color = Color(0, 0, 0, 1)
 
