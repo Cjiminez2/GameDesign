@@ -66,7 +66,7 @@ tile_set = SubResource("TileSet_0nwrv")
 [node name="MazeGrid" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_0nwrv")
 
-[node name="Player1" parent="." instance=ExtResource("2_qwk4s")]
+[node name="Player1" parent="." groups=["players"] instance=ExtResource("2_qwk4s")]
 id = 1
 
 [node name="View1" type="Camera2D" parent="Player1"]
@@ -77,7 +77,7 @@ zoom = Vector2(2, 2)
 [node name="AOV1" type="PointLight2D" parent="Player1"]
 texture = SubResource("GradientTexture2D_8w6ao")
 
-[node name="Player2" parent="." instance=ExtResource("2_qwk4s")]
+[node name="Player2" parent="." groups=["players"] instance=ExtResource("2_qwk4s")]
 position = Vector2(50, 0)
 id = 2
 

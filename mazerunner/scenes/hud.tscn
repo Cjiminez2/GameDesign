@@ -36,5 +36,9 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Normal"
 
+[node name="Timer" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="pressed" from="Hard" to="." method="_on_hard_pressed"]
 [connection signal="pressed" from="Normal" to="." method="_on_normal_pressed"]

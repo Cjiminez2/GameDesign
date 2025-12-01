@@ -4,6 +4,7 @@ extends Node
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var player: CharacterBody2D = $PlayerSquare
 @onready var goal: CollisionShape2D = $Goal/CollisionShape2D
+@onready var final_time: Label = $HUD/ScreenTransition/Time
 
 var ROWS: int
 var COLS: int
@@ -11,6 +12,10 @@ const WALL: Vector2i = Vector2i(0, 0)
 const PATH: Vector2i = Vector2i(1, 0)
 
 var maze := []
+
+
+var time_elapsed: float = 0.0
+var is_running: bool = false
 
 #Scales the maze according to the difficulty
 func _setup_maze(scale: float) -> void:
@@ -47,6 +52,7 @@ func reset_maze() -> void:
 		maze.append(row)
 
 func generate_maze() -> void:
+	start_timer()
 	reset_maze()
 	
 	var start_row: int = 1
@@ -55,7 +61,7 @@ func generate_maze() -> void:
 	
 	carve_passage(start_row, start_col)
 	#Adds the EXIT
-	maze[-1][-2] = 0
+	maze[ROWS - 1][COLS - 2] = 0
 	draw_maze()
 	
 func carve_passage(row, col) -> void:
@@ -86,7 +92,7 @@ func carve_passage(row, col) -> void:
 			maze[row + dr / 2][col + dc / 2] = 0
 			
 			carve_passage(new_row, new_col)
-
+			
 func draw_maze() -> void:
 	maze_grid.clear()
 	
@@ -95,13 +101,27 @@ func draw_maze() -> void:
 			var tile_type = WALL if maze[r][c] == 1 else PATH
 			maze_grid.set_cell(Vector2i(c, r), 0, tile_type)
 
+func format_time(time: float) -> String:
+	var seconds: int = int(time) % 60
+	var minutes: int = int(time / 60) % 60
+	var milliseconds: int = int(time * 1000) % 1000
+	return "%02d:%02d.%03d" % [minutes, seconds, milliseconds]
+	
+func start_timer():
+	is_running = true
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+func _process(delta: float) -> void:
+	if is_running:
+		time_elapsed += delta
+		$HUD/Timer.text = format_time(time_elapsed)
 
 func _on_goal_body_entered(_body: Node2D) -> void:
+	is_running = false
+	final_time.text = format_time(time_elapsed)
 	transition.play("fade_in")
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	Global.goto_scene("res://scenes/title_screen.tscn")
 	
 func _ready() -> void:

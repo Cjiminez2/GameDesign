@@ -27,15 +27,13 @@ func _setup_maze(scale: float) -> void:
 	var scaler: float = 1 / scale
 	maze_grid.scale = Vector2(scaler, scaler)
 	second_grid.scale = Vector2(scaler, scaler)
-	player_one.scale_player(scaler)
-	player_two.scale_player(scaler)
+	get_tree().call_group("players", "scale_player", scaler)
 	goal.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
 	player_one.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(1,1)))
 	
 	goal_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
 	player_two.position = second_grid.to_global(second_grid.map_to_local(Vector2i(1,1)))
-	player_one.clear_trail()
-	player_two.clear_trail()
+	get_tree().call_group("players", "clear_trail")
 
 
 func race_start() -> void:
@@ -44,8 +42,7 @@ func race_start() -> void:
 	
 	
 func _ready() -> void:
-	player_one.change_color(Color(1, 0, 0))
-	player_two.change_color(Color(1, 0, 0))
+	get_tree().call_group("players", "change_color", Color(1, 0, 0))
 
 func reset_maze() -> void:
 	maze = []
@@ -106,8 +103,7 @@ func draw_maze() -> void:
 			second_grid.set_cell(Vector2i(c, r), 0, tile_type)
 
 func _choose_color() -> void:
-	player_one.choose_color()
-	player_two.choose_color()
+	get_tree().call_group("players", "choose_color")
 			
 	both_ready = one_ready + two_ready
 		

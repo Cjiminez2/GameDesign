@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgfeb12u6er2t"]
+[gd_scene load_steps=7 format=3 uid="uid://cgfeb12u6er2t"]
+
+[ext_resource type="FontFile" uid="uid://b32dkyjj6gak" path="res://Silkscreen/Silkscreen-Regular.ttf" id="1_yu5p1"]
 
 [sub_resource type="Animation" id="Animation_yu5p1"]
 length = 0.001
@@ -54,6 +56,10 @@ _data = {
 &"fade_out": SubResource("Animation_5b10v")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_bev2w"]
+font = ExtResource("1_yu5p1")
+font_color = Color(0, 0, 0, 1)
+
 [node name="ScreenTransition" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -68,3 +74,8 @@ color = Color(1, 1, 1, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_pepwg")
 }
+
+[node name="Time" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_bev2w")

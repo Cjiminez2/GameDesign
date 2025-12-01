@@ -26,7 +26,7 @@ stretch = true
 
 [node name="P2View" type="SubViewport" parent="Splitter/P2Container"]
 handle_input_locally = false
-size = Vector2i(150, 400)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="P2Camera" type="Camera2D" parent="Splitter/P2Container/P2View"]
@@ -45,7 +45,7 @@ stretch = true
 
 [node name="P1View" type="SubViewport" parent="Splitter/P1Container"]
 handle_input_locally = false
-size = Vector2i(150, 400)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="P1Camera" type="Camera2D" parent="Splitter/P1Container/P1View"]
