@@ -71,6 +71,16 @@ texture_normal = SubResource("GradientTexture2D_3yumr")
 
 [node name="ScreenTransition" parent="." instance=ExtResource("5_dc4i4")]
 
+[node name="Version" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 27.0
+offset_top = 123.0
+offset_right = 143.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 7
+text = "Version 1.0"
+
 [connection signal="pressed" from="Escape" to="." method="_on_escape_pressed"]
 [connection signal="pressed" from="Race" to="." method="_on_race_pressed"]
 [connection signal="pressed" from="GoHome" to="." method="_on_go_home_pressed"]
