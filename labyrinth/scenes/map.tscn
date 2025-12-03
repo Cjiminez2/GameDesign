@@ -79,5 +79,6 @@ color = Color(0, 0, 0, 1)
 [node name="ScreenTransition" parent="HUD" instance=ExtResource("5_2klcf")]
 
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
+[connection signal="back_home" from="HUD" to="." method="_on_hud_back_home"]
 [connection signal="start_hard" from="HUD" to="." method="_new_hard"]
 [connection signal="start_normal" from="HUD" to="." method="_new_normal"]

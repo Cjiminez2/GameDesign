@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://duicwtrxwx72p"]
+[gd_scene load_steps=9 format=3 uid="uid://duicwtrxwx72p"]
 
 [ext_resource type="Script" uid="uid://dn4n8dyywsb86" path="res://scripts/title_screen.gd" id="1_fgkus"]
 [ext_resource type="Texture2D" uid="uid://t128daier1ni" path="res://assets/LABYRINTH.png" id="2_sa3yf"]
@@ -6,6 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://bc7s2jdi3lav8" path="res://assets/Race.png" id="4_dc4i4"]
 [ext_resource type="PackedScene" uid="uid://cgfeb12u6er2t" path="res://scenes/screen_transition.tscn" id="5_dc4i4"]
 [ext_resource type="Texture2D" uid="uid://bvodu6s40q0so" path="res://assets/GO HOME.png" id="5_e54dn"]
+
+[sub_resource type="Gradient" id="Gradient_e54dn"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3yumr"]
+gradient = SubResource("Gradient_e54dn")
+width = 9
+height = 9
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -53,8 +61,17 @@ texture_normal = ExtResource("5_e54dn")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="ColorSquare" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 104.0
+offset_right = 388.0
+offset_bottom = 113.0
+texture_normal = SubResource("GradientTexture2D_3yumr")
+
 [node name="ScreenTransition" parent="." instance=ExtResource("5_dc4i4")]
 
 [connection signal="pressed" from="Escape" to="." method="_on_escape_pressed"]
 [connection signal="pressed" from="Race" to="." method="_on_race_pressed"]
 [connection signal="pressed" from="GoHome" to="." method="_on_go_home_pressed"]
+[connection signal="pressed" from="ColorSquare" to="." method="_on_color_square_pressed"]

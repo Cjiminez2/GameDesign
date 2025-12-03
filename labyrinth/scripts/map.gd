@@ -4,7 +4,8 @@ extends Node
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var player: CharacterBody2D = $PlayerSquare
 @onready var goal: CollisionShape2D = $Goal/CollisionShape2D
-@onready var final_time: Label = $HUD/ScreenTransition/Time
+@onready var final_time: Label = $HUD/ScreenTransition/Results
+@onready var timer: Label = $HUD/Timer
 
 var ROWS: int
 var COLS: int
@@ -13,15 +14,11 @@ const PATH: Vector2i = Vector2i(1, 0)
 
 var maze := []
 
-
-var time_elapsed: float = 0.0
-var is_running: bool = false
-
 #Scales the maze according to the difficulty
 func _setup_maze(scale: float) -> void:
 	var scaler: float = 1 / scale
 	player.visible = !player.visible
-	player.change_color(Color(1, 0, 0))
+	player.change_color(Global.current_color)
 	maze_grid.scale = Vector2(scaler, scaler)
 	player.scale_player(scaler)
 	goal.position = maze_grid.to_global(maze_grid.map_to_local(Vector2i(COLS - 2, ROWS + 1)))
@@ -52,7 +49,7 @@ func reset_maze() -> void:
 		maze.append(row)
 
 func generate_maze() -> void:
-	start_timer()
+	timer.start_timer()
 	reset_maze()
 	
 	var start_row: int = 1
@@ -106,20 +103,10 @@ func format_time(time: float) -> String:
 	var minutes: int = int(time / 60) % 60
 	var milliseconds: int = int(time * 1000) % 1000
 	return "%02d:%02d.%03d" % [minutes, seconds, milliseconds]
-	
-func start_timer():
-	is_running = true
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if is_running:
-		time_elapsed += delta
-		$HUD/Timer.text = format_time(time_elapsed)
 
 func _on_goal_body_entered(_body: Node2D) -> void:
-	is_running = false
-	final_time.text = format_time(time_elapsed)
+	timer.stop_timer()
+	final_time.text = timer.text
 	transition.play("fade_in")
 	await get_tree().create_timer(2.0).timeout
 	Global.goto_scene("res://scenes/title_screen.tscn")
@@ -127,3 +114,8 @@ func _on_goal_body_entered(_body: Node2D) -> void:
 func _ready() -> void:
 	transition.get_parent().get_node("ColorRect").color.a = 255
 	transition.play("fade_out")
+
+func _on_hud_back_home() -> void:
+	transition.play("fade_in")
+	await get_tree().create_timer(0.5).timeout
+	Global.goto_scene("res://scenes/title_screen.tscn")

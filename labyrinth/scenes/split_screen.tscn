@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj6po1n3e5xbx"]
+[gd_scene load_steps=6 format=3 uid="uid://bj6po1n3e5xbx"]
 
 [ext_resource type="Script" uid="uid://brrrw65minkp8" path="res://scripts/split_screen.gd" id="1_c5m37"]
 [ext_resource type="Script" uid="uid://cur3sih46r6t7" path="res://scripts/multiplayer_camera.gd" id="2_b2tsv"]
 [ext_resource type="PackedScene" uid="uid://dv58iofs3efr0" path="res://scenes/split_world.tscn" id="4_b2tsv"]
+[ext_resource type="Script" uid="uid://jgfunlid3gu5" path="res://scripts/timer.gd" id="5_1ycwb"]
 [ext_resource type="PackedScene" uid="uid://cgfeb12u6er2t" path="res://scenes/screen_transition.tscn" id="5_utmev"]
 
 [node name="SplitScreen" type="Node"]
@@ -26,7 +27,7 @@ stretch = true
 
 [node name="P2View" type="SubViewport" parent="Splitter/P2Container"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(150, 400)
 render_target_update_mode = 4
 
 [node name="P2Camera" type="Camera2D" parent="Splitter/P2Container/P2View"]
@@ -45,7 +46,7 @@ stretch = true
 
 [node name="P1View" type="SubViewport" parent="Splitter/P1Container"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(150, 400)
 render_target_update_mode = 4
 
 [node name="P1Camera" type="Camera2D" parent="Splitter/P1Container/P1View"]
@@ -70,5 +71,58 @@ offset_bottom = 295.0
 mouse_filter = 2
 text = "Player One Wins"
 
+[node name="P1Text" type="Label" parent="."]
+offset_left = 280.0
+offset_right = 380.0
+offset_bottom = 21.0
+text = "Player 1"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="P2Text" type="Label" parent="."]
+offset_left = 30.0
+offset_right = 139.0
+offset_bottom = 21.0
+text = "Player 2"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="P2Context" type="Label" parent="."]
+offset_left = 11.0
+offset_top = 317.0
+offset_right = 142.0
+offset_bottom = 362.0
+text = "\"CAPS LOCK\" When Ready"
+horizontal_alignment = 1
+autowrap_mode = 1
+script = ExtResource("5_1ycwb")
+
+[node name="P1Context" type="Label" parent="."]
+offset_left = 242.0
+offset_top = 317.0
+offset_right = 383.0
+offset_bottom = 362.0
+text = "\"ENTER\" When Ready"
+horizontal_alignment = 1
+autowrap_mode = 1
+script = ExtResource("5_1ycwb")
+
+[node name="Return" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -29.0
+offset_right = 39.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Return"
+
+[connection signal="one_color_chosen" from="Splitter/P1Container/P1View/World" to="." method="_on_one_color_chosen"]
 [connection signal="one_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_one_wins"]
+[connection signal="start_timers" from="Splitter/P1Container/P1View/World" to="." method="_on_start_timers"]
+[connection signal="two_color_chosen" from="Splitter/P1Container/P1View/World" to="." method="_on_two_color_chosen"]
 [connection signal="two_wins" from="Splitter/P1Container/P1View/World" to="." method="_on_two_wins"]
+[connection signal="pressed" from="Return" to="." method="_on_return_pressed"]

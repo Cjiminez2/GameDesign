@@ -58,6 +58,7 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_bev2w"]
 font = ExtResource("1_yu5p1")
+font_size = 44
 font_color = Color(0, 0, 0, 1)
 
 [node name="ScreenTransition" type="Node2D"]
@@ -75,7 +76,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_pepwg")
 }
 
-[node name="Time" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Results" type="Label" parent="."]
+offset_left = 174.0
+offset_top = 168.0
+offset_right = 214.0
+offset_bottom = 225.0
+size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_bev2w")
+horizontal_alignment = 1
+autowrap_mode = 2

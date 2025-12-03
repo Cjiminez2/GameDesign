@@ -2,6 +2,10 @@ extends Node
 
 signal one_wins
 signal two_wins
+
+signal one_color_chosen
+signal two_color_chosen
+signal start_timers
 #Common variables
 @onready var maze_grid: TileMapLayer = $MazeGrid
 @onready var second_grid: TileMapLayer = $MazeGrid2
@@ -108,6 +112,7 @@ func _choose_color() -> void:
 	both_ready = one_ready + two_ready
 		
 	if (both_ready == 2):
+		emit_signal("start_timers")
 		both_ready = -1
 		one_ready = -1
 		two_ready = -1
@@ -117,15 +122,19 @@ func _process(_delta: float) -> void:
 	_choose_color()
 
 func _on_goal_body_entered(_body: Node2D) -> void:
+	player_one.visible = !player_one.visible
 	emit_signal("one_wins")
 
 
 func _on_goal_2_body_entered(_body: Node2D) -> void:
+	player_two.visible = !player_two.visible
 	emit_signal("two_wins")
 
 
 func _on_ready_1() -> void:
+	emit_signal("one_color_chosen")
 	one_ready = 1
 
 func _on_ready_2() -> void:
+	emit_signal("two_color_chosen")
 	two_ready = 1

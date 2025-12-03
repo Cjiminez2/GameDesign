@@ -1,5 +1,9 @@
 extends Node
 var current_scene = null
+var current_color: Color = Color(1, 0, 0)
+
+var one_wins = 0
+var two_wins = 0
 
 func _ready() -> void:
 	var root = get_tree().root
